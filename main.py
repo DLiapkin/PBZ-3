@@ -34,18 +34,22 @@ def find_root_class():
 def update_table():
     temp: list = []
     rt_classes = find_root_class()
-    for oc in dictionary:
+    for oc in rt_classes:
         if not temp.__contains__(oc.name):
-            id = vocabularyTree.insert('', index="end", values=[oc.name, oc.individuals])
-            temp.append(oc.name)
-            if len(oc.subClasses) != 0:
-                for sub_cl in oc.subClasses:
-                    for cl in dictionary:
-                        if cl.name == sub_cl and not temp.__contains__(cl.name):
-                            vocabularyTree.insert(id, index='end', values=[cl.name, cl.individuals])
-                            temp.append(sub_cl)
+            create_node(temp, oc.name, '')
 
 
+def create_node(temp: list, current_class: str, old_id: str):
+    for cl in dictionary:
+        if not temp.__contains__(cl.name) and cl.name == current_class:
+            ID = vocabularyTree.insert(old_id, index="end", text=cl.name, values=[cl.name, cl.individuals])
+            temp.append(cl.name)
+            if len(cl.subClasses) != 0:
+                for sub_cl in cl.subClasses:
+                    for c in dictionary:
+                        if c.name == sub_cl and not temp.__contains__(c.name):
+                            # vocabularyTree.insert(ID, index='end', text=c.name, values=[c.name, c.individuals])
+                            create_node(temp, sub_cl, ID)
 
 
 def clear_table():
@@ -128,14 +132,18 @@ createButton.config(command=load_ontology)
 
 space1 = Label(root)
 vocabularyFrame = Frame(root, bd=2)
-vocabularyTree = ttk.Treeview(vocabularyFrame, show='tree',
-                              columns=("Класс", "Экземпляр"), height=11)
-vocabularyTree.heading('Класс', text="Класс", anchor='center')
-vocabularyTree.heading('Экземпляр', text="Экземпляр", anchor='center')
-vocabularyTree.column('#0', stretch=NO, minwidth=0, width=20)
-vocabularyTree.column('#1', stretch=NO, minwidth=347, width=400)
-vocabularyTree.column('#2', stretch=NO, minwidth=347, width=400)
-vocabularyTree.grid()
+# vocabularyTree = ttk.Treeview(vocabularyFrame, show='tree',
+#                               columns=("Класс", "Экземпляр"), height=11)
+# vocabularyTree.heading('Класс', text="Класс", anchor='center')
+# vocabularyTree.heading('Экземпляр', text="Экземпляр", anchor='center')
+# vocabularyTree.column('#0', stretch=NO, minwidth=0, width=20)
+# vocabularyTree.column('#1', stretch=NO, minwidth=347, width=400)
+# vocabularyTree.column('#2', stretch=NO, minwidth=347, width=400)
+vocabularyTree = ttk.Treeview(vocabularyFrame, show='tree', height=25)
+vocabularyTree.column('#0', stretch=YES, minwidth=0, width=600)
+vocabularyTree.grid_rowconfigure(0, weight=1)
+vocabularyTree.grid_columnconfigure(0, weight=1)
+vocabularyTree.grid(row=0, column=0, sticky='nsew')
 
 space0.pack()
 buttonFrame.pack()
