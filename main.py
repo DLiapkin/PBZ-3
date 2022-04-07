@@ -21,7 +21,20 @@ class OClass:
         self.individuals = []
 
 
+class ObjectProperty:
+    name = ''
+    subject = ''
+    object = ''
+
+    def __init__(self):
+        self.name = ''
+        self.subject = ''
+        self.object = ''
+
+
 class_dictionary = []
+obj_properties = []
+individuals_dictionary = []
 
 
 def find_root_class():
@@ -33,12 +46,27 @@ def find_root_class():
     return root_classes
 
 
-def update_table():
+def update_tables():
+    vocabularyTree.delete(*vocabularyTree.get_children())
     temp: list = []
     rt_classes = find_root_class()
     for oc in rt_classes:
         if not temp.__contains__(oc.name):
             create_node(temp, oc.name, '')
+    update_obj_property_table()
+    update_individuals_table()
+
+
+def update_obj_property_table():
+    objPropTree.delete(*objPropTree.get_children())
+    for ob in obj_properties:
+        objPropTree.insert('', 'end', values=(ob.subject, ob.name, ob.object))
+
+
+def update_individuals_table():
+    individualsTree.delete(*individualsTree.get_children())
+    for ind in individuals_dictionary:
+        individualsTree.insert('', 'end', values=ind)
 
 
 def create_node(temp: list, current_class: str, old_id: str):
@@ -50,7 +78,6 @@ def create_node(temp: list, current_class: str, old_id: str):
                 for sub_cl in cl.subClasses:
                     for c in class_dictionary:
                         if c.name == sub_cl and not temp.__contains__(c.name):
-                            # vocabularyTree.insert(ID, index='end', text=c.name, values=[c.name, c.individuals])
                             create_node(temp, sub_cl, ID)
 
 
@@ -65,7 +92,6 @@ def load_ontology():
     if filename is None:
         return
     g = Graph()
-    # g.parse("C:/Users/D_Lia/Desktop/PBZ_2.owl")
     g.parse(filename)
 
     ontology_iri = ""
@@ -74,30 +100,58 @@ def load_ontology():
                 o.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/2002/07/owl#Ontology\')':
             ontology_iri = s.__repr__().replace(
                 'rdflib.term.URIRef(\'', '')[:-2] + '#'
+    load_classes(ontology_iri, g)
+    load_properties(ontology_iri, g)
+    load_individuals(ontology_iri, g)
+    update_tables()
 
+
+def load_classes(ontology_iri: str, g: Graph):
     for s, p, o in g:
         s_str = s.__repr__()
         if o.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/2002/07/owl#Class\')' and \
                 p.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/1999/02/22-rdf-syntax-ns#type\')':
             oc = OClass()
-            # oc.name = s_str.replace(
-            #     'rdflib.term.URIRef(\'http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#', '')[:-2]
-            oc.name = s_str.replace(
-                f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2]
+            oc.name = s_str.replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2]
             for sub, pre, obj in g:
                 if pre.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/2000/01/rdf-schema#subClassOf\')' and \
                         obj.__repr__() == s_str:
                     oc.subClasses.append(
-                        sub.__repr__().replace(
-                            'rdflib.term.URIRef(\'http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#', '')[:-2])
+                        sub.__repr__().replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2])
                 if pre.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/1999/02/22-rdf-syntax-ns#type\')' and \
                         obj.__repr__() == s_str:
                     oc.individuals.append(
-                        sub.__repr__().replace(
-                            'rdflib.term.URIRef(\'http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#', '')[:-2])
-
+                        sub.__repr__().replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2])
             class_dictionary.append(oc)
-    update_table()
+
+
+def load_properties(ontology_iri: str, g: Graph):
+    repeats = []
+    for s, p, o in g:
+        s_str = s.__repr__()
+        if o.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/2002/07/owl#ObjectProperty\')' and \
+                p.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/1999/02/22-rdf-syntax-ns#type\')':
+            for sub, pre, obj in g:
+                if not repeats.__contains__(
+                        sub.__repr__().replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2]) and \
+                        pre.__repr__() == s_str:
+                    ob = ObjectProperty()
+                    ob.name = s_str.replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2]
+                    ob.subject = sub.__repr__().replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2]
+                    ob.object = obj.__repr__().replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2]
+                    repeats.append(sub.__repr__().replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2])
+                    obj_properties.append(ob)
+
+
+def load_individuals(ontology_iri: str, g: Graph):
+    repeats = []
+    for s, p, o in g:
+        s_str = s.__repr__()
+        if o.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/2002/07/owl#NamedIndividual\')' and \
+                p.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/1999/02/22-rdf-syntax-ns#type\')':
+            ind = s_str.replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2]
+            repeats.append(ind)
+            individuals_dictionary.append(ind)
 
 
 if __name__ == '__main__':
@@ -134,35 +188,21 @@ if __name__ == '__main__':
 
 root = Tk()
 main_menu = Menu(root)
-main_menu.add_command(label='Обновить онтологию', command=update_table)
+main_menu.add_command(label='Обновить онтологию', command=update_tables)
 main_menu.add_command(label='Загрузить онтологию', command=load_ontology)
 main_menu.add_command(label='Помощь', command="")
 root.config(menu=main_menu)
-
-# не использованно
-# space0 = Label(root)
-# buttonFrame = Frame(root, bd=2)
-# updateButton = Button(buttonFrame, text="Update")
-# updateButton.config(command=update_table)
-# createButton = Button(buttonFrame, text="Load")
-# createButton.config(command=load_ontology)
 
 space1 = Label(root)
 notebook_lists = ["Classes", "Object properties", "Individuals"]
 notebook = ttk.Notebook(root, width=600, height=500)
 vocabularyFrame = Frame(notebook, bd=2)
-dummyFrame1 = Frame(notebook, bd=2)
-dummyFrame2 = Frame(notebook, bd=2)
+objPropFrame = Frame(notebook, bd=2)
+individualsTreeFrame = Frame(notebook, bd=2)
 notebook.add(vocabularyFrame, text=notebook_lists[0], underline=0, sticky=tkinter.NE + tkinter.SW)
-notebook.add(dummyFrame1, text=notebook_lists[1], underline=0, sticky=tkinter.NE + tkinter.SW)
-notebook.add(dummyFrame2, text=notebook_lists[2], underline=0, sticky=tkinter.NE + tkinter.SW)
-# vocabularyTree = ttk.Treeview(vocabularyFrame, show='tree',
-#                               columns=("Класс", "Экземпляр"), height=11)
-# vocabularyTree.heading('Класс', text="Класс", anchor='center')
-# vocabularyTree.heading('Экземпляр', text="Экземпляр", anchor='center')
-# vocabularyTree.column('#0', stretch=NO, minwidth=0, width=20)
-# vocabularyTree.column('#1', stretch=NO, minwidth=347, width=400)
-# vocabularyTree.column('#2', stretch=NO, minwidth=347, width=400)
+notebook.add(objPropFrame, text=notebook_lists[1], underline=0, sticky=tkinter.NE + tkinter.SW)
+notebook.add(individualsTreeFrame, text=notebook_lists[2], underline=0, sticky=tkinter.NE + tkinter.SW)
+
 vocabularyTree = ttk.Treeview(vocabularyFrame, show='tree', height=25)
 vocabularyTree.column('#0', stretch=YES, minwidth=0, width=600)
 # , columns="Экземпляр"
@@ -171,10 +211,21 @@ vocabularyTree.grid_rowconfigure(0, weight=1)
 vocabularyTree.grid_columnconfigure(0, weight=1)
 vocabularyTree.grid(row=0, column=0, sticky='nsew')
 
-# space0.pack()
-# buttonFrame.pack()
-# updateButton.pack(side="left")
-# createButton.pack(side="left")
+objPropTree = ttk.Treeview(objPropFrame, columns=("Subject", "Predicate", "Object"), selectmode='browse', height=25)
+objPropTree.heading('Subject', text="Subject", anchor='center')
+objPropTree.heading('Predicate', text="Predicate", anchor='center')
+objPropTree.heading('Object', text="Object", anchor='center')
+objPropTree.column('#0', stretch=NO, minwidth=0, width=0)
+objPropTree.column('#1', stretch=NO, minwidth=100, width=200)
+objPropTree.column('#2', stretch=NO, minwidth=100, width=200)
+objPropTree.column('#3', stretch=NO, minwidth=100, width=200)
+objPropTree.grid(row=0, column=0, sticky='nsew')
+
+individualsTree = ttk.Treeview(individualsTreeFrame, columns="Individuals", selectmode='browse', height=25)
+individualsTree.heading('Individuals', text="Individuals", anchor='center')
+individualsTree.column('#0', stretch=NO, minwidth=0, width=0)
+individualsTree.column('#1', stretch=NO, minwidth=100, width=600)
+individualsTree.grid(row=0, column=0, sticky='nsew')
 
 # space1.pack()
 notebook.pack()
