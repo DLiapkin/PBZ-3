@@ -2,34 +2,34 @@ from rdflib import Graph
 
 import tkinter
 from tkinter import *
-from tkinter import messagebox as mb, scrolledtext
 from tkinter import Tk, Label, Button, Entry, END, Frame, NO, W, WORD, Text
 import tkinter.ttk as ttk
 from tkinter.filedialog import askopenfilename, asksaveasfile
 
-import View.query_view as que
+from View import query_view as que, creation_view as crv
+from Models import ontoClass as ocl, ontoObjProperty as obp
 
 
-class OClass:
-    name = ''
-    subClasses = []
-    individuals = []
+# class OClass:
+#     name = ''
+#     subClasses = []
+#     individuals = []
+#
+#     def __init__(self):
+#         self.name = ''
+#         self.subClasses = []
+#         self.individuals = []
 
-    def __init__(self):
-        self.name = ''
-        self.subClasses = []
-        self.individuals = []
 
-
-class ObjectProperty:
-    name = ''
-    subject = ''
-    object = ''
-
-    def __init__(self):
-        self.name = ''
-        self.subject = ''
-        self.object = ''
+# class ObjectProperty:
+#     name = ''
+#     subject = ''
+#     object = ''
+#
+#     def __init__(self):
+#         self.name = ''
+#         self.subject = ''
+#         self.object = ''
 
 
 class_dictionary = []
@@ -111,7 +111,7 @@ def load_classes(ontology_iri: str, g: Graph):
         s_str = s.__repr__()
         if o.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/2002/07/owl#Class\')' and \
                 p.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/1999/02/22-rdf-syntax-ns#type\')':
-            oc = OClass()
+            oc = ocl.OClass()
             oc.name = s_str.replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2]
             for sub, pre, obj in g:
                 if pre.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/2000/01/rdf-schema#subClassOf\')' and \
@@ -135,7 +135,7 @@ def load_properties(ontology_iri: str, g: Graph):
                 if not repeats.__contains__(
                         sub.__repr__().replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2]) and \
                         pre.__repr__() == s_str:
-                    ob = ObjectProperty()
+                    ob = obp.ObjectProperty()
                     ob.name = s_str.replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2]
                     ob.subject = sub.__repr__().replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2]
                     ob.object = obj.__repr__().replace(f'rdflib.term.URIRef(\'{ontology_iri}', '')[:-2]
@@ -176,44 +176,55 @@ def query_window():
     # query_win.grab_set()
 
 
-# if __name__ == '__main__':
-#     gr = Graph()
-#     gr.parse("C:/Users/D_Lia/Desktop/PBZ_2.owl")
-    # for s, p, o in gr:
-    #     s_str = s.__repr__()
-    #     s_str = s_str.replace(
-    #         'rdflib.term.URIRef(\'', '')[:-2]
-    #     p_str = p.__repr__()
-    #     p_str = p_str.replace(
-    #         'rdflib.term.URIRef(\'', '')[:-2]
-    #     o_str = o.__repr__()
-    #     o_str = o_str.replace(
-    #         'rdflib.term.URIRef(\'http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#', '')[:-2]
-    #     print((s_str, p_str, o_str))
-    # q = """
-    #     PREFIX inv: <http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#>
+def creation_window():
+    creation_win = crv.Creation(root, graph, class_dictionary, obj_properties, individuals_dictionary)
+    creation_win.grab_set()
+    # creation_win = Toplevel(root)
+    # creation_frame = Frame(creation_win, bd=2)
+    # name_text = Entry(creation_frame, height=1, width=70, wrap=WORD)
     #
-    #     SELECT ?class_name
-    #     WHERE { ?class_name rdf:type owl:Class }
-    # # """
+    # choosing_value = 0
+    # create_class = Radiobutton(creation_frame, text="Class", variable=choosing_value, value=0)
+    # create_obj_prop = Radiobutton(creation_frame, text="Object property", variable=choosing_value, value=1)
+    # create_individual = Radiobutton(creation_frame, text="Individual", variable=choosing_value, value=2)
+    # choose_button = Button(creation_frame, text="Choose", width=30)
     #
-    # name = []
-    # # Apply the query to the graph and iterate through results
-    # for r in g.query(q):
-    #     ref = r.class_name
-    #     temp = ref.__repr__()
-    #     name.append(
-    #         temp.replace('rdflib.term.URIRef(\'http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#', '')[:-2]
-    #     )
+    # create_class_frame = Frame(creation_frame, bd=2)
+    # is_subclass_of_entry = Entry(create_class_frame, width=70)
+    # subclasses_entry = Entry(create_class_frame, width=70, wrap=WORD)
+    # create_button = Button(creation_frame, text="Create", width=30, height=3)
     #
-    # print(name)
+    # # добавление радиокнопок
+    # create_class.pack(side="left")
+    # create_obj_prop.pack(side="left")
+    # create_individual.pack(side="left")
+    # choose_button.pack(side="center")
+    #
+    # is_subclass_of_entry.pack()
+    # subclasses_entry.pack()
+    # create_class_frame.pack()
+    #
+    # creation_frame.pack()
+    # name_text.pack()
+    # create_button.pack()
+    # creation_win.grab_set()
+
+# сохраняет онтологию в файл
+# да, вот так просто)
+def save_ontology():
+    file = asksaveasfile(filetypes=(("owl file", "*.owl"),), defaultextension=("owl file", "*.owl"))
+    if file is None:
+        return
+    graph.serialize(destination=file.name, format="xml")
+
 
 root = Tk()
 main_menu = Menu(root)
+main_menu.add_command(label='Загрузить', command=load_ontology)
+main_menu.add_command(label='Сохранить', command=save_ontology)
 main_menu.add_command(label='Обновить онтологию', command=update_tables)
-main_menu.add_command(label='Загрузить онтологию', command=load_ontology)
 main_menu.add_command(label="SPARQL query", command=query_window)
-main_menu.add_command(label='Помощь', command="")
+main_menu.add_command(label="Добавление сущностей", command=creation_window)
 root.config(menu=main_menu)
 
 space1 = Label(root)

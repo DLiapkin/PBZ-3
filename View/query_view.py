@@ -39,6 +39,12 @@ class Query(tkinter.Toplevel):
         query_button.pack()
         self.result_tree.pack()
 
+        # выдаёт ошибку, но по крайней мере не блокирует главное окно во время использования этого
+        self.attributes(self.callback)
+
+    def callback(self):
+        pass
+
     def get_query_result(self):
         q = self.query_text.get('1.0', END)
         name = []

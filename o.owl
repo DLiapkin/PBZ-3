@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:pbz_2="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Aerospace_engineer">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Engineering"/>
+    <owl:country></owl:country>
+    <owl:yearOfInvention></owl:yearOfInvention>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Technical_science">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Applied_sciences"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Robert_Lusser">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Aircraft_designer"/>
+    <pbz_2:invented rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Pulsejet"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Applied_sciences">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Science"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Exact_science">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Science"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#prestige">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Electrical_engineering">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Technical_science"/>
+    <owl:description></owl:description>
+    <owl:prestige></owl:prestige>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Space_rocket">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Invention"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Chemistry">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Exact_science"/>
+    <owl:description></owl:description>
+    <owl:prestige></owl:prestige>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Engineering">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Technical_science"/>
+    <owl:description></owl:description>
+    <owl:prestige></owl:prestige>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Bunsen_Burner">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Invention"/>
+    <pbz_2:invented rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Space_rocket"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Owners">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Winery"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Galileo_Galilei">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Astronomer"/>
+    <pbz_2:invented rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Telescope"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Telescope">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Invention"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Winery">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Internal_combustion_engine">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Invention"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Alexander_Flemming">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Microbiologist"/>
+    <pbz_2:invented rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Penicillin"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Electric_generator">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Invention"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Scientist-chemist">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Chemistry"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Charles-Augustin_de_Coulomb">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Engineer-physicist"/>
+    <pbz_2:invented rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Coulombs_Law"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Mechanical_scientist">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Aviation"/>
+    <owl:country></owl:country>
+    <owl:yearOfInvention></owl:yearOfInvention>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Physics">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Exact_science"/>
+    <owl:description></owl:description>
+    <owl:prestige></owl:prestige>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Astronomer">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Physics"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Michael_Faraday">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Experimental_physicist"/>
+    <pbz_2:invented rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Electric_generator"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Coulombs_Law">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Invention"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Microbiologist">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Medicine"/>
+    <owl:country></owl:country>
+    <owl:yearOfInvention></owl:yearOfInvention>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Alwyn_and_Brian_Corban">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Owners"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Avogadros_Law">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Invention"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Joseph_Lister">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Surgeon"/>
+    <pbz_2:invented rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Disinfection"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Surgeon">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Medicine"/>
+    <owl:country></owl:country>
+    <owl:yearOfInvention></owl:yearOfInvention>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Aautomatic_camera">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Invention"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Albert_Einstein">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Theoretical_physicist"/>
+    <pbz_2:invented rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Aautomatic_camera"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Aircraft_designer">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Aviation"/>
+    <owl:country></owl:country>
+    <owl:yearOfInvention></owl:yearOfInvention>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#The_vortex_theory_of_the_propeller">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Invention"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#description">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Robert_Wilhelm_Bunsen">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Experimental_chemist"/>
+    <pbz_2:invented rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Bunsen_Burner"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Experimental_physicist">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Electrical_engineering"/>
+    <owl:country></owl:country>
+    <owl:yearOfInvention></owl:yearOfInvention>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Medicine">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Applied_sciences"/>
+    <owl:description></owl:description>
+    <owl:prestige></owl:prestige>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Nikolai_Zhukovsky">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Mechanical_scientist"/>
+    <pbz_2:invented rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#The_vortex_theory_of_the_propeller"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Disinfection">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Invention"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Pulsejet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Invention"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Nikolaus_August_Otto">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Self-taught_inventor"/>
+    <pbz_2:invented rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Internal_combustion_engine"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Aviation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Technical_science"/>
+    <owl:description></owl:description>
+    <owl:prestige></owl:prestige>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#yearOfInvention">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Theoretical_physicist">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Physics"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Experimental_chemist">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Chemistry"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Wernher_von_Braun">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Aerospace_engineer"/>
+    <pbz_2:invented rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Space_rocket"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Red_wine">
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Wine"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Bernard_Arnault">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Owners"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#invented">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Penicillin">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Invention"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Amedeo_Avogadro">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Scientist-chemist"/>
+    <pbz_2:invented rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Avogadros_Law"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Self-taught_inventor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Engineering"/>
+    <owl:country></owl:country>
+    <owl:yearOfInvention></owl:yearOfInvention>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Jacob_Beringer">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Owners"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Wine">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Winery"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Engineer-physicist">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Electrical_engineering"/>
+    <owl:country></owl:country>
+    <owl:yearOfInvention></owl:yearOfInvention>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Science">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Invention">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Peter_De_Haan">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+    <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#Owners"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#country">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty"/>
+  </rdf:Description>
+</rdf:RDF>
