@@ -1,12 +1,13 @@
-import tkinter.ttk
-
 from rdflib import Graph
 
+import tkinter
 from tkinter import *
 from tkinter import messagebox as mb, scrolledtext
 from tkinter import Tk, Label, Button, Entry, END, Frame, NO, W, WORD, Text
 import tkinter.ttk as ttk
 from tkinter.filedialog import askopenfilename, asksaveasfile
+
+import View.query_view as que
 
 
 class OClass:
@@ -34,6 +35,8 @@ class ObjectProperty:
 class_dictionary = []
 obj_properties = []
 individuals_dictionary = []
+
+graph = Graph()
 
 
 def find_root_class():
@@ -89,18 +92,17 @@ def load_ontology():
     filename = askopenfilename(filetypes=(("owl file", "*.owl"),), defaultextension=("owl file", "*.owl"))
     if filename is None:
         return
-    g = Graph()
-    g.parse(filename)
+    graph.parse(filename)
 
     ontology_iri = ""
-    for s, p, o in g:
+    for s, p, o in graph:
         if p.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/1999/02/22-rdf-syntax-ns#type\')' and \
                 o.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/2002/07/owl#Ontology\')':
             ontology_iri = s.__repr__().replace(
                 'rdflib.term.URIRef(\'', '')[:-2] + '#'
-    load_classes(ontology_iri, g)
-    load_properties(ontology_iri, g)
-    load_individuals(ontology_iri, g)
+    load_classes(ontology_iri, graph)
+    load_properties(ontology_iri, graph)
+    load_individuals(ontology_iri, graph)
     update_tables()
 
 
@@ -153,23 +155,25 @@ def load_individuals(ontology_iri: str, g: Graph):
 
 
 def query_window():
-    query_win = Toplevel(root)
-    input_frame = Frame(query_win, bd=2)
-    query_text = Text(input_frame, height=10, width=70, wrap=WORD)
-    query_button = Button(input_frame, text="Query", width=30, height=3)
-    result_tree = ttk.Treeview(input_frame, columns=("Subject", "Predicate", "Object"), selectmode='browse', height=5)
-    result_tree.heading('Subject', text="Subject", anchor='center')
-    result_tree.heading('Predicate', text="Predicate", anchor='center')
-    result_tree.heading('Object', text="Object", anchor='center')
-    result_tree.column('#0', stretch=NO, minwidth=0, width=0)
-    result_tree.column('#1', stretch=NO, minwidth=10, width=200)
-    result_tree.column('#2', stretch=NO, minwidth=10, width=200)
-    result_tree.column('#3', stretch=NO, minwidth=10, width=200)
-    input_frame.pack()
-    query_text.pack()
-    query_button.pack()
-    result_tree.pack()
+    query_win = que.Query(root, graph)
     query_win.grab_set()
+    # query_win = Toplevel(root)
+    # input_frame = Frame(query_win, bd=2)
+    # query_text = Text(input_frame, height=10, width=70, wrap=WORD)
+    # query_button = Button(input_frame, text="Query", width=30, height=3)
+    # result_tree = ttk.Treeview(input_frame, columns=("Subject", "Predicate", "Object"), selectmode='browse', height=5)
+    # result_tree.heading('Subject', text="Subject", anchor='center')
+    # result_tree.heading('Predicate', text="Predicate", anchor='center')
+    # result_tree.heading('Object', text="Object", anchor='center')
+    # result_tree.column('#0', stretch=NO, minwidth=0, width=0)
+    # result_tree.column('#1', stretch=NO, minwidth=10, width=200)
+    # result_tree.column('#2', stretch=NO, minwidth=10, width=200)
+    # result_tree.column('#3', stretch=NO, minwidth=10, width=200)
+    # input_frame.pack()
+    # query_text.pack()
+    # query_button.pack()
+    # result_tree.pack()
+    # query_win.grab_set()
 
 
 # if __name__ == '__main__':
@@ -191,7 +195,7 @@ def query_window():
     #
     #     SELECT ?class_name
     #     WHERE { ?class_name rdf:type owl:Class }
-    # """
+    # # """
     #
     # name = []
     # # Apply the query to the graph and iterate through results
@@ -224,8 +228,6 @@ notebook.add(individualsTreeFrame, text=notebook_lists[2], underline=0, sticky=t
 
 vocabularyTree = ttk.Treeview(vocabularyFrame, show='tree', height=25)
 vocabularyTree.column('#0', stretch=YES, minwidth=0, width=600)
-# , columns="Экземпляр"
-# vocabularyTree.column('#1', stretch=YES, minwidth=347, width=400)
 vocabularyTree.grid_rowconfigure(0, weight=1)
 vocabularyTree.grid_columnconfigure(0, weight=1)
 vocabularyTree.grid(row=0, column=0, sticky='nsew')
