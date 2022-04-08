@@ -1,7 +1,6 @@
 import tkinter.ttk
 
 from rdflib import Graph
-import io
 
 from tkinter import *
 from tkinter import messagebox as mb, scrolledtext
@@ -81,12 +80,11 @@ def create_node(temp: list, current_class: str, old_id: str):
                             create_node(temp, sub_cl, ID)
 
 
-def clear_table():
-    vocabularyTree.delete(*vocabularyTree.get_children())
-    class_dictionary.clear()
+# def clear_table():
+#     vocabularyTree.delete(*vocabularyTree.get_children())
+#     class_dictionary.clear()
 
 
-# пока функция сильно завязана на одной онтологии
 def load_ontology():
     filename = askopenfilename(filetypes=(("owl file", "*.owl"),), defaultextension=("owl file", "*.owl"))
     if filename is None:
@@ -154,9 +152,29 @@ def load_individuals(ontology_iri: str, g: Graph):
             individuals_dictionary.append(ind)
 
 
-if __name__ == '__main__':
-    gr = Graph()
-    gr.parse("C:/Users/D_Lia/Desktop/PBZ_2.owl")
+def query_window():
+    query_win = Toplevel(root)
+    input_frame = Frame(query_win, bd=2)
+    query_text = Text(input_frame, height=10, width=70, wrap=WORD)
+    query_button = Button(input_frame, text="Query", width=30, height=3)
+    result_tree = ttk.Treeview(input_frame, columns=("Subject", "Predicate", "Object"), selectmode='browse', height=5)
+    result_tree.heading('Subject', text="Subject", anchor='center')
+    result_tree.heading('Predicate', text="Predicate", anchor='center')
+    result_tree.heading('Object', text="Object", anchor='center')
+    result_tree.column('#0', stretch=NO, minwidth=0, width=0)
+    result_tree.column('#1', stretch=NO, minwidth=10, width=200)
+    result_tree.column('#2', stretch=NO, minwidth=10, width=200)
+    result_tree.column('#3', stretch=NO, minwidth=10, width=200)
+    input_frame.pack()
+    query_text.pack()
+    query_button.pack()
+    result_tree.pack()
+    query_win.grab_set()
+
+
+# if __name__ == '__main__':
+#     gr = Graph()
+#     gr.parse("C:/Users/D_Lia/Desktop/PBZ_2.owl")
     # for s, p, o in gr:
     #     s_str = s.__repr__()
     #     s_str = s_str.replace(
@@ -190,6 +208,7 @@ root = Tk()
 main_menu = Menu(root)
 main_menu.add_command(label='Обновить онтологию', command=update_tables)
 main_menu.add_command(label='Загрузить онтологию', command=load_ontology)
+main_menu.add_command(label="SPARQL query", command=query_window)
 main_menu.add_command(label='Помощь', command="")
 root.config(menu=main_menu)
 
