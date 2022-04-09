@@ -2,9 +2,8 @@ import tkinter as tk
 from tkinter import Radiobutton, Label, Button, Entry, Frame, IntVar, messagebox
 import tkinter.ttk as ttk
 
-import rdflib
 from rdflib import Graph, URIRef
-from rdflib.namespace import ORG, OWL, RDF, RDFS
+from rdflib.namespace import OWL, RDF, RDFS
 
 from Models import ontoClass as ocl, ontoObjProperty as obp
 
@@ -72,29 +71,29 @@ class Creation(tk.Toplevel):
         # создание компонентов панели для создания object property
         self.create_objprop_frame = Frame(self.creation_frame, bd=2)
         who_is_subject_label = Label(self.create_objprop_frame, text="Subject")
-        subject_entry = Entry(self.create_objprop_frame, width=30)
+        self.subject_entry = Entry(self.create_objprop_frame, width=30)
         who_is_object_label = Label(self.create_objprop_frame, text="Object")
-        object_entry = Entry(self.create_objprop_frame, width=30)
+        self.object_entry = Entry(self.create_objprop_frame, width=30)
 
         # добавление компонентов панели для создания класса
         who_is_subject_label.grid(row=0, column=0)
-        subject_entry.grid(row=0, column=2)
+        self.subject_entry.grid(row=0, column=2)
         who_is_object_label.grid(row=1, column=0)
-        object_entry.grid(row=1, column=2)
+        self.object_entry.grid(row=1, column=2)
 
         # создание компонентов панели для создания экземпляра класса (individual)
         self.create_individual_frame = Frame(self.creation_frame, bd=2)
         parent_class_label = Label(self.create_individual_frame, text="Parent")
-        parent_entry = Entry(self.create_individual_frame, width=30)
+        self.parent_entry = Entry(self.create_individual_frame, width=30)
 
         # добавление компонентов панели для создания экземпляра класса
         parent_class_label.grid(row=0, column=0)
-        parent_entry.grid(row=0, column=2)
+        self.parent_entry.grid(row=0, column=2)
 
         self.ontology = graph
         for s, p, o in graph:
-            if p.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/1999/02/22-rdf-syntax-ns#type\')' and \
-                    o.__repr__() == 'rdflib.term.URIRef(\'http://www.w3.org/2002/07/owl#Ontology\')':
+            if p == RDF.type and \
+                    o == OWL.Ontology:
                 self.ontology_iri = s.__repr__().replace(
                     'rdflib.term.URIRef(\'', '')[:-2] + '#'
 
@@ -105,7 +104,6 @@ class Creation(tk.Toplevel):
         pass
 
     def change_status(self):
-        # temp = self.choosing_value.get()
         if self.choosing_value.get() == 0:
             # очистка окна от других панелей
             self.create_objprop_frame.grid_forget()
@@ -149,16 +147,17 @@ class Creation(tk.Toplevel):
                                  message="Класс с таким названием уже находится в онтологии!")
             return
 
-        # добавляет сом класс и его подклассы в class_dictionary
+        # добавляет сам класс и его подклассы в class_dictionary
         oc = ocl.OClass()
         oc.name = name
         oc.subClasses = subclasses
         self.class_dictionary.append(oc)
 
-        for sub in subclasses:
-            oc_sub = ocl.OClass()
-            oc_sub.name = sub
-            self.class_dictionary.append(oc_sub)
+        if len(subclasses) != 1 or (subclasses[0] != '' or subclasses[0] != ' '):
+            for sub in subclasses:
+                oc_sub = ocl.OClass()
+                oc_sub.name = sub
+                self.class_dictionary.append(oc_sub)
 
         # создаю объекты-ссылки rdf для класса и его родителя
         class_uri = URIRef(self.ontology_iri + name)
@@ -176,26 +175,85 @@ class Creation(tk.Toplevel):
                 c.subClasses.append(name)
 
         # добавляю аналогичные тройки для подклассов добавляемого класса
-        for sub in subclasses:
-            sub_uri = URIRef(self.ontology_iri + sub)
-            is_present = False
-            for c in self.class_dictionary:
-                if c.name == sub:
-                    is_present = True
-            if is_present:
-                self.ontology.add((sub_uri, RDFS.subClassOf, class_uri))
-            else:
-                self.ontology.add((sub_uri, RDF.type, OWL.Class))
-                self.ontology.add((sub_uri, RDFS.subClassOf, class_uri))
+        if len(subclasses) != 1 or (subclasses[0] != '' or subclasses[0] != ' '):
+            for sub in subclasses:
+                sub_uri = URIRef(self.ontology_iri + sub)
+                is_present = False
+                for c in self.class_dictionary:
+                    if c.name == sub:
+                        is_present = True
+                if is_present:
+                    self.ontology.add((sub_uri, RDFS.subClassOf, class_uri))
+                else:
+                    self.ontology.add((sub_uri, RDF.type, OWL.Class))
+                    self.ontology.add((sub_uri, RDFS.subClassOf, class_uri))
 
     def add_new_objproperty(self):
-        temp = ''
+        name = self.name_text.get()
+        subject_op = self.subject_entry.get()
+        object_op = self.object_entry.get()
+
+        is_present1 = False
+        is_present2 = False
+        for ind in self.individuals_dictionary:
+            if ind == subject_op:
+                is_present1 = True
+            if ind == object_op:
+                is_present2 = True
+
+        if not is_present1 or not is_present2:
+            messagebox.showerror(title="Ошибка создания отношения",
+                                 message="Экземпляра с таким названием не существует в онтологии!")
+            return
+
+        name_uri = URIRef(self.ontology_iri + name)
+        subject_uri = URIRef(self.ontology_iri + subject_op)
+        object_uri = URIRef(self.ontology_iri + object_op)
+
+        is_present = False
+        for op in self.obj_properties:
+            if op.name == name:
+                is_present = True
+
+        if is_present:
+            self.ontology.add((subject_uri, name_uri, object_uri))
+        else:
+            self.ontology.add((name_uri, RDF.type, OWL.ObjectProperty))
+            self.ontology.add((subject_uri, name_uri, object_uri))
+            op = obp.ObjectProperty()
+            op.name = name
+            op.subject = subject_op
+            op.object = object_op
+            self.obj_properties.append(op)
 
     def add_new_individual(self):
-        temp = ''
+        name = self.name_text.get()
+        parent = self.parent_entry.get()
+
+        for ind in self.individuals_dictionary:
+            if ind == name:
+                messagebox.showerror(title="Ошибка создания экземпляра",
+                                     message="Экземпляр с таким названием уже находится в онтологии!")
+                return
+
+        is_present = False
+        for c in self.class_dictionary:
+            if c.name == parent:
+                is_present = True
+
+        if not is_present:
+            messagebox.showerror(title="Ошибка создания экземпляра",
+                                 message="Класса с таким названием не существует в онтологии!")
+            return
+
+        name_uri = URIRef(self.ontology_iri + name)
+        parent_uri = URIRef(self.ontology_iri + parent)
+
+        self.ontology.add((name_uri, RDF.type, OWL.NamedIndividual))
+        self.ontology.add((name_uri, RDF.type, parent_uri))
+        self.individuals_dictionary.append(name)
 
     def add_new_item(self):
-        # temp = self.choosing_value.get()
         if self.choosing_value.get() == 0:
             self.add_new_class()
 
