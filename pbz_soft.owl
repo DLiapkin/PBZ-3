@@ -1,0 +1,594 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#"
+     xml:base="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:pbz_software="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#is -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#is"/>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#was_written_on -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#was_written_on"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#big -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#big">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#medium -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#medium">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#small -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#small">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Application -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Application">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Software"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#System"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Architecture -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Architecture"/>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Distribution -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Distribution"/>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Free -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Free">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#GameDev -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#GameDev">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Industry"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Geoinformation_systems -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Geoinformation_systems">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Industry"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Importance -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Importance"/>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Industry -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Industry"/>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Logistics_systems -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Logistics_systems">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Industry"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Medical_systems -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Medical_systems">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Industry"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Open_Source -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Open_Source">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Platform -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Platform"/>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Programming_languages -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Programming_languages"/>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Proprietary -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Proprietary">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Distribution"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Software -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Software"/>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#System -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#System">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Software"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Type -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Type"/>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#User -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#User"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#AssetManage -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#AssetManage">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Proprietary"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Platform-independent"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Web_Application"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#CSS"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Csharp"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Java_Script"/>
+        <small>200MB</small>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Average -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Average">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#User"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Beginner -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Beginner">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#User"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Programming_languages"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#CSS -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#CSS">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Programming_languages"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Cross-platform -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Cross-platform">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Platform"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Csharp -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Csharp">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Programming_languages"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Desktop_Application -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Desktop_Application">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Golang -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Golang">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Programming_languages"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#HTML -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#HTML">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Programming_languages"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Java -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Java">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Programming_languages"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Java_Script -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Java_Script">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Programming_languages"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Kotlin -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Kotlin">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Programming_languages"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#LibreOffice -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#LibreOffice">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Free"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Cross-platform"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Desktop_Application"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C++"/>
+        <medium>3GB</medium>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Linux -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Linux">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Open_Source"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C"/>
+        <big>25GB</big>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Maxoptra -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Maxoptra">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Logistics_systems"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Platform-independent"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Web_Application"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#CSS"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Csharp"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#HTML"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Java_Script"/>
+        <medium>1GB</medium>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#MedElement -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#MedElement">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Medical_systems"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Microservice"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Platform-independent"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Web_Application"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#CSS"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#HTML"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Java_Script"/>
+        <small>300MB</small>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Microservice -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Microservice">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Architecture"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Monolithic -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Monolithic">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Architecture"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#National_security -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#National_security">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Importance"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Operating_system -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Operating_system">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#System"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Organizational_security -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Organizational_security">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Importance"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Other_system -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Other_system">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#User"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Panorama -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Panorama">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Geoinformation_systems"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Desktop_Application"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C++"/>
+        <small>500MB</small>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Platform-independent -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Platform-independent">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Platform"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Private_property -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Private_property">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Importance"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#PyCharm -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#PyCharm">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Application"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Cross-platform"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Desktop_Application"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Java"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Python"/>
+        <medium>2GB</medium>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Python -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Python">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Programming_languages"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Specialist -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Specialist">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#User"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Stellaris -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Stellaris">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#GameDev"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Cross-platform"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Desktop_Application"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C++"/>
+        <medium>10GB</medium>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#VirtualBox -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#VirtualBox">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Open_Source"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Cross-platform"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Desktop_Application"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Python"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C++"/>
+        <medium>2GB</medium>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Visual_Studio -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Visual_Studio">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Application"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Cross-platform"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Desktop_Application"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C++"/>
+        <medium>3GB</medium>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Web_Application -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Web_Application">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Type"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Windows -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Windows">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Proprietary"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C++"/>
+        <big>25GB</big>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#7zip -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#7zip">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Free"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Cross-platform"/>
+        <is rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Desktop_Application"/>
+        <was_written_on rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C++"/>
+        <small>10MB</small>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C++ -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#C++">
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Programming_languages"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Free"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Open_Source"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Proprietary"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#GameDev"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Geoinformation_systems"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Logistics_systems"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/2/pbz_software#Medical_systems"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

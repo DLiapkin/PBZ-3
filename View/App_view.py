@@ -1,5 +1,6 @@
 from typing import List
 
+import rdflib
 from rdflib import Graph
 from rdflib.namespace import OWL, RDF
 
@@ -25,19 +26,24 @@ class App(Tk):
         main_menu = Menu(self)
         main_menu.add_command(label='Загрузить', command=self.load_ontology)
         main_menu.add_command(label='Сохранить', command=self.save_ontology)
-        main_menu.add_command(label='Обновить онтологию', command=self.update_tables)
+        main_menu.add_command(label='Обновить', command=self.update_tables)
         main_menu.add_command(label="SPARQL query", command=self.query_window)
-        main_menu.add_command(label="Добавление сущностей", command=self.creation_window)
+        main_menu.add_command(label="Добавление", command=self.creation_window)
+        main_menu.add_command(label="Удаление", command=self.delete_item)
         self.config(menu=main_menu)
 
+        self.tab_label = Label(self, text="Текущая страница:")
+        # self.tab_label.pack()
         notebook_lists = ["Classes", "Object properties", "Individuals"]
-        notebook = ttk.Notebook(self, width=600, height=600)
-        vocabulary_frame = Frame(notebook, bd=2)
-        obj_prop_frame = Frame(notebook, bd=2)
-        individuals_tree_frame = Frame(notebook, bd=2)
-        notebook.add(vocabulary_frame, text=notebook_lists[0], underline=0, sticky=tkinter.NE + tkinter.SW)
-        notebook.add(obj_prop_frame, text=notebook_lists[1], underline=0, sticky=tkinter.NE + tkinter.SW)
-        notebook.add(individuals_tree_frame, text=notebook_lists[2], underline=0, sticky=tkinter.NE + tkinter.SW)
+        self.notebook = ttk.Notebook(self, width=600, height=600)
+        vocabulary_frame = Frame(self.notebook, bd=2)
+        obj_prop_frame = Frame(self.notebook, bd=2)
+        individuals_tree_frame = Frame(self.notebook, bd=2)
+        self.notebook.add(vocabulary_frame, text=notebook_lists[0], underline=0, sticky=tkinter.NE + tkinter.SW)
+        self.notebook.add(obj_prop_frame, text=notebook_lists[1], underline=0, sticky=tkinter.NE + tkinter.SW)
+        self.notebook.add(individuals_tree_frame, text=notebook_lists[2], underline=0, sticky=tkinter.NE + tkinter.SW)
+        self.notebook.enable_traversal()
+        # self.notebook.bind("<<NotebookTabChanged>>", self.select_tab)
 
         self.vocabularyTree = ttk.Treeview(vocabulary_frame, show='tree', height=30)
         self.vocabularyTree.column('#0', stretch=YES, minwidth=0, width=600)
@@ -63,7 +69,51 @@ class App(Tk):
         self.individualsTree.column('#1', stretch=NO, minwidth=100, width=600)
         self.individualsTree.grid(row=0, column=0, sticky='nsew')
 
-        notebook.pack()
+        self.notebook.pack()
+
+    # def select_tab(self, event):
+    #     tab_id = self.notebook.select()
+    #     tab_name = self.notebook.tab(tab_id, "text")
+    #     text = "Текущая страница: {}".format(tab_name)
+    #     self.tab_label.config(text=text)
+
+    def select_tab(self):
+        tab_id = self.notebook.select()
+        tab_name = self.notebook.tab(tab_id, "text")
+        return tab_name
+
+    def delete_item(self):
+        curr_tab = self.select_tab()
+        if curr_tab == "Classes":
+            selected = self.vocabularyTree.focus()
+            temp = self.vocabularyTree.item(selected, 'text')
+            for cl in self.class_dictionary:
+                if cl.name == temp:
+                    self.class_dictionary.remove(cl)
+            del_uri = rdflib.URIRef(self.ontology_iri + temp)
+            self.graph.remove((del_uri, None, None))
+            self.graph.remove((None, None, del_uri))
+        if curr_tab == "Object properties":
+            selected = self.objPropTree.focus()
+            temp = self.objPropTree.item(selected, 'values')
+            for ob in self.obj_properties:
+                if ob.subject == temp[0] and ob.name == temp[1] and \
+                        ob.object == temp[2]:
+                    self.obj_properties.remove(ob)
+            del_sub = rdflib.URIRef(self.ontology_iri + temp[0])
+            del_pre = rdflib.URIRef(self.ontology_iri + temp[1])
+            del_obj = rdflib.URIRef(self.ontology_iri + temp[2])
+            self.graph.remove((del_sub, del_pre, del_obj))
+        if curr_tab == "Individuals":
+            selected = self.individualsTree.focus()
+            temp = self.individualsTree.item(selected, 'values')
+            self.individuals_dictionary.remove(temp[0])
+            del_uri = rdflib.URIRef(self.ontology_iri + temp[0])
+            for ob in self.obj_properties:
+                if ob.subject == temp[0] or ob.object == temp[0]:
+                    self.obj_properties.remove(ob)
+            self.graph.remove((del_uri, None, None))
+            self.graph.remove((None, None, del_uri))
 
     def find_root_class(self) -> List:
         root_classes = self.class_dictionary.copy()
@@ -116,8 +166,9 @@ class App(Tk):
         filename = askopenfilename(filetypes=(("owl file", "*.owl"),), defaultextension=("owl file", "*.owl"))
         if filename is None:
             return
-        self.graph.parse(filename)
 
+        self.graph = Graph().parse(filename)
+        self.title(filename)
         self.clear_table()
         for s, p, o in self.graph:
             if p == RDF.type and o == OWL.Ontology:
@@ -145,19 +196,20 @@ class App(Tk):
                 self.class_dictionary.append(oc)
 
     def load_properties(self):
-        repeats = []
+        # repeats = []
         for s, p, o in self.graph:
             s_str = s.__repr__()
             if o == OWL.ObjectProperty and p == RDF.type:
                 for sub, pre, obj in self.graph:
-                    if not repeats.__contains__(
-                            sub.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]) and \
-                            pre.__repr__() == s_str:
+                    # if not repeats.__contains__(
+                    #         sub.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]) and \
+                    #         pre.__repr__() == s_str:
+                    if pre.__repr__() == s_str:
                         ob = oP.ObjectProperty()
                         ob.name = s_str.replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
                         ob.subject = sub.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
                         ob.object = obj.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
-                        repeats.append(sub.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2])
+                        # repeats.append(sub.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2])
                         self.obj_properties.append(ob)
 
     def load_individuals(self):

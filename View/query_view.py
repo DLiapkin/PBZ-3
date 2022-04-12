@@ -32,9 +32,8 @@ class Query(tkinter.Toplevel):
                     o == OWL.Ontology:
                 self.ontology_iri = s.__repr__().replace('rdflib.term.URIRef(\'', '')[:-2] + '#'
 
-        q = """PREFIX inv: <http://www.semanticweb.org/d_lia/ontologies/2022/1/pbz_2#>
-        SELECT ?class_name
-            WHERE { ?class_name rdf:type owl:Class }
+        q = f"""PREFIX pref:<{self.ontology_iri}>""" + """\nSELECT ?class_name 
+        WHERE { ?class_name rdf:type owl:Class }
         """
         self.query_text.insert(0.0, q)
         input_frame.pack()
