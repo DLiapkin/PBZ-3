@@ -2,7 +2,7 @@ from typing import List
 
 import rdflib
 from rdflib import Graph
-from rdflib.namespace import OWL, RDF
+from rdflib.namespace import OWL, RDF, RDFS
 
 import tkinter
 from tkinter import *
@@ -34,14 +34,16 @@ class App(Tk):
 
         self.tab_label = Label(self, text="Текущая страница:")
         # self.tab_label.pack()
-        notebook_lists = ["Classes", "Object properties", "Individuals"]
+        notebook_lists = ["Classes", "Object properties", "Subject-Predicate-Object", "Individuals"]
         self.notebook = ttk.Notebook(self, width=600, height=600)
         vocabulary_frame = Frame(self.notebook, bd=2)
         obj_prop_frame = Frame(self.notebook, bd=2)
+        subj_pred_obj_frame = Frame(self.notebook, bd=2)
         individuals_tree_frame = Frame(self.notebook, bd=2)
         self.notebook.add(vocabulary_frame, text=notebook_lists[0], underline=0, sticky=tkinter.NE + tkinter.SW)
         self.notebook.add(obj_prop_frame, text=notebook_lists[1], underline=0, sticky=tkinter.NE + tkinter.SW)
-        self.notebook.add(individuals_tree_frame, text=notebook_lists[2], underline=0, sticky=tkinter.NE + tkinter.SW)
+        self.notebook.add(subj_pred_obj_frame, text=notebook_lists[2], underline=0, sticky=tkinter.NE + tkinter.SW)
+        self.notebook.add(individuals_tree_frame, text=notebook_lists[3], underline=0, sticky=tkinter.NE + tkinter.SW)
         self.notebook.enable_traversal()
         # self.notebook.bind("<<NotebookTabChanged>>", self.select_tab)
 
@@ -51,16 +53,22 @@ class App(Tk):
         self.vocabularyTree.grid_columnconfigure(0, weight=1)
         self.vocabularyTree.grid(row=0, column=0, sticky='nsew')
 
-        self.objPropTree = ttk.Treeview(obj_prop_frame, columns=("Subject", "Predicate", "Object"),
-                                        selectmode='browse', height=30)
-        self.objPropTree.heading('Subject', text="Subject", anchor='center')
-        self.objPropTree.heading('Predicate', text="Predicate", anchor='center')
-        self.objPropTree.heading('Object', text="Object", anchor='center')
-        self.objPropTree.column('#0', stretch=NO, minwidth=0, width=0)
-        self.objPropTree.column('#1', stretch=NO, minwidth=100, width=200)
-        self.objPropTree.column('#2', stretch=NO, minwidth=100, width=200)
-        self.objPropTree.column('#3', stretch=NO, minwidth=100, width=200)
+        self.objPropTree = ttk.Treeview(obj_prop_frame, show='tree', height=30)
+        self.objPropTree.column('#0', stretch=YES, minwidth=0, width=600)
+        self.objPropTree.grid_rowconfigure(0, weight=1)
+        self.objPropTree.grid_columnconfigure(0, weight=1)
         self.objPropTree.grid(row=0, column=0, sticky='nsew')
+
+        self.subjPredObjTree = ttk.Treeview(subj_pred_obj_frame, columns=("Subject", "Predicate", "Object"),
+                                            selectmode='browse', height=30)
+        self.subjPredObjTree.heading('Subject', text="Subject", anchor='center')
+        self.subjPredObjTree.heading('Predicate', text="Predicate", anchor='center')
+        self.subjPredObjTree.heading('Object', text="Object", anchor='center')
+        self.subjPredObjTree.column('#0', stretch=NO, minwidth=0, width=0)
+        self.subjPredObjTree.column('#1', stretch=NO, minwidth=100, width=200)
+        self.subjPredObjTree.column('#2', stretch=NO, minwidth=100, width=200)
+        self.subjPredObjTree.column('#3', stretch=NO, minwidth=100, width=200)
+        self.subjPredObjTree.grid(row=0, column=0, sticky='nsew')
 
         self.individualsTree = ttk.Treeview(
             individuals_tree_frame, columns="Individuals", selectmode='browse', height=30)
@@ -68,6 +76,7 @@ class App(Tk):
         self.individualsTree.column('#0', stretch=NO, minwidth=0, width=0)
         self.individualsTree.column('#1', stretch=NO, minwidth=100, width=600)
         self.individualsTree.grid(row=0, column=0, sticky='nsew')
+        self.individualsTree.bind("<Double-1>", self.open_individuals_attributes)
 
         self.notebook.pack()
 
@@ -82,6 +91,46 @@ class App(Tk):
         tab_name = self.notebook.tab(tab_id, "text")
         return tab_name
 
+    def open_individuals_attributes(self, event):
+        item = self.individualsTree.identify('item', event.x, event.y)
+        item_name = self.individualsTree.item(item, "value")[0]
+        prop_name = '-'
+        prop_obj = '-'
+        data_prop_name = '-'
+        data_prop_value = '-'
+        for s, p, o in self.graph:
+            if p != RDF.type and s == rdflib.URIRef(self.ontology_iri + item_name):
+                for sub, pre, obj in self.graph:
+                    if sub == p and obj == OWL.ObjectProperty:
+                        prop_name = p.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
+                        prop_obj = o.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
+                    if sub == p and obj == OWL.DatatypeProperty:
+                        data_prop_name = p.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
+                        temp: str = o.__repr__().replace(f'rdflib.term.Literal(\'', '')
+                        if temp.__contains__(','):
+                            index_of_comma = temp.index(',')
+                            data_prop_value = temp[0:index_of_comma-1]
+                        else:
+                            data_prop_value = temp[:-2]
+
+        ind_attr_win = Toplevel()
+        ind_frame = Frame(ind_attr_win, bd=2)
+        name_label = Label(ind_frame, text="Name", width=10)
+        name_value = Label(ind_frame, text=item_name, width=30)
+
+        prop_label = Label(ind_frame, text="Properties", width=30)
+        property_value = Label(ind_frame, text=prop_name + ' ' + prop_obj)
+        data_prop_value = Label(ind_frame, text=data_prop_name + ' ' + data_prop_value)
+
+        ind_frame.grid(row=0, column=0)
+        name_label.grid(row=1, column=0)
+        name_value.grid(row=1, column=1)
+        prop_label.grid(row=2, column=0)
+        property_value.grid(row=2, column=1)
+        data_prop_value.grid(row=3, column=1)
+
+        ind_attr_win.grab_set()
+
     def delete_item(self):
         curr_tab = self.select_tab()
         if curr_tab == "Classes":
@@ -94,8 +143,8 @@ class App(Tk):
             self.graph.remove((del_uri, None, None))
             self.graph.remove((None, None, del_uri))
         if curr_tab == "Object properties":
-            selected = self.objPropTree.focus()
-            temp = self.objPropTree.item(selected, 'values')
+            selected = self.subjPredObjTree.focus()
+            temp = self.subjPredObjTree.item(selected, 'values')
             for ob in self.obj_properties:
                 if ob.subject == temp[0] and ob.name == temp[1] and \
                         ob.object == temp[2]:
@@ -115,6 +164,16 @@ class App(Tk):
             self.graph.remove((del_uri, None, None))
             self.graph.remove((None, None, del_uri))
 
+    def update_tables(self):
+        self.vocabularyTree.delete(*self.vocabularyTree.get_children())
+        self.objPropTree.delete(*self.objPropTree.get_children())
+        self.subjPredObjTree.delete(*self.subjPredObjTree.get_children())
+        self.individualsTree.delete(*self.individualsTree.get_children())
+        self.update_classes_table()
+        self.update_obj_prop_table()
+        self.update_subj_pred_obj_table()
+        self.update_individuals_table()
+
     def find_root_class(self) -> List:
         root_classes = self.class_dictionary.copy()
         for c in self.class_dictionary:
@@ -123,27 +182,14 @@ class App(Tk):
                     root_classes.remove(c)
         return root_classes
 
-    def update_tables(self):
-        self.vocabularyTree.delete(*self.vocabularyTree.get_children())
+    def update_classes_table(self):
         temp: list = []
         rt_classes = self.find_root_class()
         for oc in rt_classes:
             if not temp.__contains__(oc.name):
-                self.create_node(temp, oc.name, '')
-        self.update_obj_property_table()
-        self.update_individuals_table()
+                self.create_class_node(temp, oc.name, '')
 
-    def update_obj_property_table(self):
-        self.objPropTree.delete(*self.objPropTree.get_children())
-        for ob in self.obj_properties:
-            self.objPropTree.insert('', 'end', values=(ob.subject, ob.name, ob.object))
-
-    def update_individuals_table(self):
-        self.individualsTree.delete(*self.individualsTree.get_children())
-        for ind in self.individuals_dictionary:
-            self.individualsTree.insert('', 'end', values=ind)
-
-    def create_node(self, temp: list, current_class: str, old_id: str):
+    def create_class_node(self, temp: list, current_class: str, old_id: str):
         for cl in self.class_dictionary:
             if not temp.__contains__(cl.name) and cl.name == current_class:
                 node_id = self.vocabularyTree.insert(old_id, index="end", text=cl.name, values=[cl.individuals])
@@ -152,11 +198,55 @@ class App(Tk):
                     for sub_cl in cl.subClasses:
                         for c in self.class_dictionary:
                             if c.name == sub_cl and not temp.__contains__(c.name):
-                                self.create_node(temp, sub_cl, node_id)
+                                self.create_class_node(temp, sub_cl, node_id)
+
+    def find_root_obj_prop(self) -> List:
+        root_properties = []
+        for s, p, o in self.graph:
+            if o == OWL.ObjectProperty:
+                root_properties.append(s)
+        for prop in root_properties:
+            for sub, pred, obj in self.graph:
+                if sub == prop and pred == RDFS.subPropertyOf:
+                    root_properties.remove(prop)
+        return root_properties
+
+    def update_obj_prop_table(self):
+        temp: list = []
+        rt_prop = self.find_root_obj_prop()
+        for pr in rt_prop:
+            if not temp.__contains__(pr):
+                self.create_prop_node(temp, pr, '')
+
+    def create_prop_node(self, temp: list, current_prop: str, old_id: str):
+        for s, p, o in self.graph:
+            if not temp.__contains__(s) and s == current_prop:
+                temp_str = s.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
+                node_id = self.objPropTree.insert(old_id, index="end", text=temp_str)
+                temp.append(s)
+                for sub, pred, obj in self.graph:
+                    if pred == RDFS.subPropertyOf and obj == s:
+                        self.create_prop_node(temp, sub, node_id)
+                # if len(cl.subClasses) != 0:
+                #     for sub_cl in cl.subClasses:
+                #         for c in self.class_dictionary:
+                #             if c.name == sub_cl and not temp.__contains__(c.name):
+                #                 self.create_prop_node(temp, sub_cl, node_id)
+
+    def update_subj_pred_obj_table(self):
+        # self.subjPredObjTree.delete(*self.subjPredObjTree.get_children())
+        for ob in self.obj_properties:
+            self.subjPredObjTree.insert('', 'end', values=(ob.subject, ob.name, ob.object))
+
+    def update_individuals_table(self):
+        # self.individualsTree.delete(*self.individualsTree.get_children())
+        for ind in self.individuals_dictionary:
+            self.individualsTree.insert('', 'end', values=ind)
 
     def clear_table(self):
         self.vocabularyTree.delete(*self.vocabularyTree.get_children())
         self.objPropTree.delete(*self.objPropTree.get_children())
+        self.subjPredObjTree.delete(*self.subjPredObjTree.get_children())
         self.individualsTree.delete(*self.individualsTree.get_children())
         self.class_dictionary.clear()
         self.obj_properties.clear()
@@ -196,20 +286,15 @@ class App(Tk):
                 self.class_dictionary.append(oc)
 
     def load_properties(self):
-        # repeats = []
         for s, p, o in self.graph:
             s_str = s.__repr__()
             if o == OWL.ObjectProperty and p == RDF.type:
                 for sub, pre, obj in self.graph:
-                    # if not repeats.__contains__(
-                    #         sub.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]) and \
-                    #         pre.__repr__() == s_str:
                     if pre.__repr__() == s_str:
                         ob = oP.ObjectProperty()
                         ob.name = s_str.replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
                         ob.subject = sub.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
                         ob.object = obj.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
-                        # repeats.append(sub.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2])
                         self.obj_properties.append(ob)
 
     def load_individuals(self):
@@ -229,7 +314,9 @@ class App(Tk):
         creation_win = crv.Creation(
             self, self.graph, self.class_dictionary, self.obj_properties, self.individuals_dictionary
         )
-        creation_win.grab_set()
+        self.update_tables()
+        # creation_win.grab_set()
+        # creation_win.protocol("WM_DELETE_WINDOW", func=self.update_tables)
 
     # сохраняет онтологию в файл
     # да, вот так просто)

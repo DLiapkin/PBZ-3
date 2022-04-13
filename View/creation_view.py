@@ -97,11 +97,12 @@ class Creation(tk.Toplevel):
                 self.ontology_iri = s.__repr__().replace(
                     'rdflib.term.URIRef(\'', '')[:-2] + '#'
 
+        self.wait_window()
         # выдаёт ошибку, но по крайней мере не блокирует главное окно во время использования этого
-        self.attributes(self.callback)
+        # self.attributes(self.callback)
 
-    def callback(self):
-        pass
+    # def callback(self):
+    #     pass
 
     def change_status(self):
         if self.choosing_value.get() == 0:
@@ -150,14 +151,15 @@ class Creation(tk.Toplevel):
         # добавляет сам класс и его подклассы в class_dictionary
         oc = ocl.OClass()
         oc.name = name
-        oc.subClasses = subclasses
-        self.class_dictionary.append(oc)
 
-        if len(subclasses) != 1 or (subclasses[0] != '' or subclasses[0] != ' '):
+        if len(subclasses) != 1 or (subclasses[0] != '' and subclasses[0] != ' '):
+            oc.subClasses = subclasses
             for sub in subclasses:
                 oc_sub = ocl.OClass()
                 oc_sub.name = sub
                 self.class_dictionary.append(oc_sub)
+
+        self.class_dictionary.append(oc)
 
         # создаю объекты-ссылки rdf для класса и его родителя
         class_uri = URIRef(self.ontology_iri + name)
@@ -262,3 +264,5 @@ class Creation(tk.Toplevel):
 
         if self.choosing_value.get() == 2:
             self.add_new_individual()
+
+        self.destroy()
