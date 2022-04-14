@@ -30,6 +30,12 @@
     
 
 
+    <!-- http://www.semanticweb.org/d_lia/ontologies/2022/3/test#Prop2 -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/3/test#Prop2"/>
+    
+
+
     <!-- http://www.semanticweb.org/d_lia/ontologies/2022/3/test#subProp1 -->
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/3/test#subProp1">
@@ -162,7 +168,7 @@
     <!-- http://www.semanticweb.org/d_lia/ontologies/2022/3/test#inst1 -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/d_lia/ontologies/2022/3/test#inst1">
-        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/3/test#Class1"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/3/test#subClass1"/>
         <subProp1 rdf:resource="http://www.semanticweb.org/d_lia/ontologies/2022/3/test#inst2"/>
         <subDataProp1 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1488</subDataProp1>
     </owl:NamedIndividual>

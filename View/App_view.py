@@ -10,7 +10,7 @@ from tkinter import Tk, Frame, NO
 import tkinter.ttk as ttk
 from tkinter.filedialog import askopenfilename, asksaveasfile
 
-from View import query_view as que, creation_view as crv
+from View import query_view as que, creation_view as crv, edit_view as edv
 from Models import ontoClass as oCl, ontoObjProperty as oP
 
 
@@ -30,6 +30,7 @@ class App(Tk):
         main_menu.add_command(label="SPARQL query", command=self.query_window)
         main_menu.add_command(label="Добавление", command=self.creation_window)
         main_menu.add_command(label="Удаление", command=self.delete_item)
+        main_menu.add_command(label="Изменение", command=self.edit_window)
         self.config(menu=main_menu)
 
         self.tab_label = Label(self, text="Текущая страница:")
@@ -94,6 +95,7 @@ class App(Tk):
     def open_individuals_attributes(self, event):
         item = self.individualsTree.identify('item', event.x, event.y)
         item_name = self.individualsTree.item(item, "value")[0]
+        class_name = '-'
         prop_name = '-'
         prop_obj = '-'
         data_prop_name = '-'
@@ -112,22 +114,29 @@ class App(Tk):
                             data_prop_value = temp[0:index_of_comma-1]
                         else:
                             data_prop_value = temp[:-2]
+            elif not o == OWL.NamedIndividual and s == rdflib.URIRef(self.ontology_iri + item_name):
+                class_name = o.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
 
         ind_attr_win = Toplevel()
         ind_frame = Frame(ind_attr_win, bd=2)
         name_label = Label(ind_frame, text="Name", width=10)
-        name_value = Label(ind_frame, text=item_name, width=30)
+        name_value = Label(ind_frame, text=item_name, width=10)
 
-        prop_label = Label(ind_frame, text="Properties", width=30)
+        class_label = Label(ind_frame, text="Class", width=10)
+        class_value = Label(ind_frame, text=class_name, width=30)
+
+        prop_label = Label(ind_frame, text="Properties", width=10)
         property_value = Label(ind_frame, text=prop_name + ' ' + prop_obj)
         data_prop_value = Label(ind_frame, text=data_prop_name + ' ' + data_prop_value)
 
         ind_frame.grid(row=0, column=0)
         name_label.grid(row=1, column=0)
         name_value.grid(row=1, column=1)
-        prop_label.grid(row=2, column=0)
-        property_value.grid(row=2, column=1)
-        data_prop_value.grid(row=3, column=1)
+        class_label.grid(row=2, column=0)
+        class_value.grid(row=2, column=1)
+        prop_label.grid(row=3, column=0)
+        property_value.grid(row=3, column=1)
+        data_prop_value.grid(row=4, column=1)
 
         ind_attr_win.grab_set()
 
@@ -142,7 +151,7 @@ class App(Tk):
             del_uri = rdflib.URIRef(self.ontology_iri + temp)
             self.graph.remove((del_uri, None, None))
             self.graph.remove((None, None, del_uri))
-        if curr_tab == "Object properties":
+        if curr_tab == "Subject-Predicate-Object":
             selected = self.subjPredObjTree.focus()
             temp = self.subjPredObjTree.item(selected, 'values')
             for ob in self.obj_properties:
@@ -163,6 +172,11 @@ class App(Tk):
                     self.obj_properties.remove(ob)
             self.graph.remove((del_uri, None, None))
             self.graph.remove((None, None, del_uri))
+        self.clear_table()
+        self.load_classes()
+        self.load_properties()
+        self.load_individuals()
+        self.update_tables()
 
     def update_tables(self):
         self.vocabularyTree.delete(*self.vocabularyTree.get_children())
@@ -205,9 +219,11 @@ class App(Tk):
         for s, p, o in self.graph:
             if o == OWL.ObjectProperty:
                 root_properties.append(s)
-        for prop in root_properties:
+        temp = root_properties.copy()
+        for prop in temp:
             for sub, pred, obj in self.graph:
-                if sub == prop and pred == RDFS.subPropertyOf:
+                if sub == prop and pred == RDFS.subPropertyOf and \
+                        not obj == OWL.topObjectProperty:
                     root_properties.remove(prop)
         return root_properties
 
@@ -218,7 +234,7 @@ class App(Tk):
             if not temp.__contains__(pr):
                 self.create_prop_node(temp, pr, '')
 
-    def create_prop_node(self, temp: list, current_prop: str, old_id: str):
+    def create_prop_node(self, temp: list, current_prop, old_id: str):
         for s, p, o in self.graph:
             if not temp.__contains__(s) and s == current_prop:
                 temp_str = s.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
@@ -227,19 +243,12 @@ class App(Tk):
                 for sub, pred, obj in self.graph:
                     if pred == RDFS.subPropertyOf and obj == s:
                         self.create_prop_node(temp, sub, node_id)
-                # if len(cl.subClasses) != 0:
-                #     for sub_cl in cl.subClasses:
-                #         for c in self.class_dictionary:
-                #             if c.name == sub_cl and not temp.__contains__(c.name):
-                #                 self.create_prop_node(temp, sub_cl, node_id)
 
     def update_subj_pred_obj_table(self):
-        # self.subjPredObjTree.delete(*self.subjPredObjTree.get_children())
         for ob in self.obj_properties:
             self.subjPredObjTree.insert('', 'end', values=(ob.subject, ob.name, ob.object))
 
     def update_individuals_table(self):
-        # self.individualsTree.delete(*self.individualsTree.get_children())
         for ind in self.individuals_dictionary:
             self.individualsTree.insert('', 'end', values=ind)
 
@@ -317,6 +326,14 @@ class App(Tk):
         self.update_tables()
         # creation_win.grab_set()
         # creation_win.protocol("WM_DELETE_WINDOW", func=self.update_tables)
+
+    def edit_window(self):
+        edit_win = edv.Edit(self, self.graph)
+        self.clear_table()
+        self.load_classes()
+        self.load_properties()
+        self.load_individuals()
+        self.update_tables()
 
     # сохраняет онтологию в файл
     # да, вот так просто)
