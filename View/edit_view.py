@@ -5,8 +5,6 @@ import tkinter.ttk as ttk
 from rdflib import Graph, URIRef
 from rdflib.namespace import OWL, RDF, RDFS
 
-from Models import ontoClass as ocl, ontoObjProperty as obp
-
 
 class Edit(tk.Toplevel):
     ontology = Graph()
@@ -213,7 +211,8 @@ class Edit(tk.Toplevel):
         subject_uri = URIRef(self.ontology_iri + subject_op)
         object_uri = URIRef(self.ontology_iri + object_op)
 
-        if len(new_subject) != 0 or len(new_object) != 0:
+        if (len(new_subject) != 0 or len(new_object) != 0) and \
+                (len(subject_op) != 0 and len(object_op) != 0):
             is_present1 = False
             is_present2 = False
             for s, p, o in self.ontology:
@@ -239,7 +238,7 @@ class Edit(tk.Toplevel):
         else:
             is_present = False
             for s, p, o in self.ontology:
-                if p == name_uri:
+                if p == name_uri or s == name_uri:
                     is_present = True
 
             if not is_present:

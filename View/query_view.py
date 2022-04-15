@@ -8,8 +8,6 @@ import tkinter.ttk as ttk
 
 
 class Query(tkinter.Toplevel):
-    query_text: Text
-    result_tree: ttk.Treeview
     ontology = Graph()
     ontology_iri = ''
 
@@ -32,7 +30,7 @@ class Query(tkinter.Toplevel):
                     o == OWL.Ontology:
                 self.ontology_iri = s.__repr__().replace('rdflib.term.URIRef(\'', '')[:-2] + '#'
 
-        q = f"""PREFIX pref:<{self.ontology_iri}>""" + """\nSELECT ?class_name 
+        q = f"""PREFIX inv:<{self.ontology_iri}>""" + """\nSELECT ?class_name 
         WHERE { ?class_name rdf:type owl:Class }
         """
         self.query_text.insert(0.0, q)
@@ -41,11 +39,7 @@ class Query(tkinter.Toplevel):
         query_button.pack()
         self.result_tree.pack()
 
-        # выдаёт ошибку, но по крайней мере не блокирует главное окно во время использования этого
-        self.attributes(self.callback)
-
-    def callback(self):
-        pass
+        self.wait_window()
 
     def get_query_result(self):
         q: str = self.query_text.get('1.0', END)
@@ -86,3 +80,5 @@ class Query(tkinter.Toplevel):
 
         for obj in result:
             self.result_tree.insert('', 'end', values=obj)
+
+        # self.destroy()

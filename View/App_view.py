@@ -34,7 +34,6 @@ class App(Tk):
         self.config(menu=main_menu)
 
         self.tab_label = Label(self, text="Текущая страница:")
-        # self.tab_label.pack()
         notebook_lists = ["Classes", "Object properties", "Subject-Predicate-Object", "Individuals"]
         self.notebook = ttk.Notebook(self, width=600, height=600)
         vocabulary_frame = Frame(self.notebook, bd=2)
@@ -46,7 +45,6 @@ class App(Tk):
         self.notebook.add(subj_pred_obj_frame, text=notebook_lists[2], underline=0, sticky=tkinter.NE + tkinter.SW)
         self.notebook.add(individuals_tree_frame, text=notebook_lists[3], underline=0, sticky=tkinter.NE + tkinter.SW)
         self.notebook.enable_traversal()
-        # self.notebook.bind("<<NotebookTabChanged>>", self.select_tab)
 
         self.vocabularyTree = ttk.Treeview(vocabulary_frame, show='tree', height=30)
         self.vocabularyTree.column('#0', stretch=YES, minwidth=0, width=600)
@@ -81,12 +79,6 @@ class App(Tk):
 
         self.notebook.pack()
 
-    # def select_tab(self, event):
-    #     tab_id = self.notebook.select()
-    #     tab_name = self.notebook.tab(tab_id, "text")
-    #     text = "Текущая страница: {}".format(tab_name)
-    #     self.tab_label.config(text=text)
-
     def select_tab(self):
         tab_id = self.notebook.select()
         tab_name = self.notebook.tab(tab_id, "text")
@@ -100,12 +92,15 @@ class App(Tk):
         prop_obj = '-'
         data_prop_name = '-'
         data_prop_value = '-'
+        # obj_prop_list = []
         for s, p, o in self.graph:
             if p != RDF.type and s == rdflib.URIRef(self.ontology_iri + item_name):
                 for sub, pre, obj in self.graph:
                     if sub == p and obj == OWL.ObjectProperty:
                         prop_name = p.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
                         prop_obj = o.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
+                        # obj_prop_list.append(prop_name + ' ' + prop_obj)
+                        # obj_prop_list.append('\n')
                     if sub == p and obj == OWL.DatatypeProperty:
                         data_prop_name = p.__repr__().replace(f'rdflib.term.URIRef(\'{self.ontology_iri}', '')[:-2]
                         temp: str = o.__repr__().replace(f'rdflib.term.Literal(\'', '')
@@ -126,6 +121,7 @@ class App(Tk):
         class_value = Label(ind_frame, text=class_name, width=30)
 
         prop_label = Label(ind_frame, text="Properties", width=10)
+        # property_value = Label(ind_frame, text=obj_prop_list)
         property_value = Label(ind_frame, text=prop_name + ' ' + prop_obj)
         data_prop_value = Label(ind_frame, text=data_prop_name + ' ' + data_prop_value)
 
@@ -317,15 +313,15 @@ class App(Tk):
 
     def query_window(self):
         query_win = que.Query(self, self.graph)
-        query_win.grab_set()
+        # query_win.grab_set()
 
     def creation_window(self):
-        creation_win = crv.Creation(
-            self, self.graph, self.class_dictionary, self.obj_properties, self.individuals_dictionary
-        )
+        creation_win = crv.Creation(self, self.graph)
+        self.clear_table()
+        self.load_classes()
+        self.load_properties()
+        self.load_individuals()
         self.update_tables()
-        # creation_win.grab_set()
-        # creation_win.protocol("WM_DELETE_WINDOW", func=self.update_tables)
 
     def edit_window(self):
         edit_win = edv.Edit(self, self.graph)
